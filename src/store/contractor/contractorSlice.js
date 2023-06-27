@@ -3,12 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 export const contractorSlice = createSlice({
     name: 'contractor',
     initialState: {
-        nombre :''
+        contratistas:[]
     },
     reducers: {
-        increment: (state, /* action */ ) => {
-        },
-        
+        setContratista:(state,actions) => {
+            state.contratistas= actions.payload
+        }    
+    
     }
 });
-export const { increment } = contractorSlice.actions;
+export const { setContratista } = contractorSlice.actions;

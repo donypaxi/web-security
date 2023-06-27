@@ -5,7 +5,7 @@ export const AppRouter = () => {
   return (
     <>
         <Routes>
-            <Route path="/home" element={<ContractorPage/>}/>
+            <Route path="/" element={<ContractorPage/>}/>
         </Routes>
     </>
   )

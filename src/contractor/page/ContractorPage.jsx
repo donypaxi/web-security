@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useDispatch } from 'react-redux';
 import { startNewNote } from "../../store/contractor/thunks";
+import { LoadingPage } from "./loadingPage";
+import { TableContractor } from "./TableContractor";
 
 
 export const ContractorPage = () => {
@@ -16,6 +18,7 @@ export const ContractorPage = () => {
     }
   return (
     <>
+        <LoadingPage/>
         <div className="text-center bg-red-400 text-white py-3">SISTEMA DE SEGURIDAD</div>
         <form className="bg-cyan-500 pt-5">
             <label>Razon social</label>
@@ -28,6 +31,7 @@ export const ContractorPage = () => {
             <br />
             <button className="bg-green-400 rounded-sm" type="submit" onClick={handleSend}>Enviar</button>
         </form>
+        <TableContractor/>
     </>
   )
 }
