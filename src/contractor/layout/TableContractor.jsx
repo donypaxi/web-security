@@ -1,9 +1,21 @@
+import { useDispatch, useSelector } from "react-redux"
+import { activeContractor } from "../../store/contractor/contractorSlice"
 import { useEffect } from "react"
-import { useSelector } from "react-redux"
 
 export const TableContractor = () => {
+    const dispatch =useDispatch()
+    const {contratistas}=useSelector(state=> state.contractor)
 
-    const {mostrar}=useSelector(state=> state.contractor)
+    // useEffect(() => {
+    //   console.log('constratistas actualizados')
+    //   console.log(contratistas)
+    // }, [contratistas])
+    
+
+    const onBtnEdit = (id) => {
+      const getElement = contratistas.find(item=>item.id == id)
+      dispatch(activeContractor(getElement))
+    }
   return (
     <>
       <table>
@@ -12,19 +24,18 @@ export const TableContractor = () => {
             <th>Empresa</th>
             <th>Ruc</th>
             <th>telefono</th>
-            <th>dirección</th>
 
           </tr>
         </thead>
         <tbody>
-          {mostrar.map((item) => (
+          {contratistas.map((item) => (
             <tr key={item.id}>
               <td>{item.empresa}</td>
               <td>{item.ruc}</td>
               <td>{item.telefono}</td>
               <td></td>
               <td></td>
-              <td><button className="rounded-xl py-1 px-3 bg-green-600 text-white">Editar</button></td>
+              <td><button onClick={()=>onBtnEdit(item.id)} className="rounded-xl py-1 px-3 bg-green-600 text-white">Editar</button></td>
               <td><button className="rounded-xl py-1 px-3 bg-red-600 text-white">Eliminar</button></td>
             </tr>
             )

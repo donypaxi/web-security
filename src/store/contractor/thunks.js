@@ -1,7 +1,7 @@
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore"
 import { FirebaseDB } from "../../firebase/config"
-import { loadContract, loadContractor, loadPedidoCompra } from "../../helpers"
-import { setContratista, setContratos, setPedidoCompra } from "./contractorSlice"
+import { getContractor, loadContract, loadContractor, loadPedidoCompra } from "../../helpers"
+import { setContratista, setContratos, setPedidoCompra, updateContractor } from "./contractorSlice"
 
 export const startNewNote = (form) => {
     return async() => {
@@ -47,5 +47,20 @@ export const starLoadingContractor= () => {
     return async(dispatch)=> {
         const arrayContratistas= await loadContractor()
         dispatch(setContratista(arrayContratistas))
+    }
+}
+
+export const starSaveContractor = (data) => {
+    return async (dispatch) => {
+        try {
+            const { empresa, ruc, telefono, id } = data;
+            const newData = { empresa, ruc, telefono };
+            
+            const resp = await updateDoc(doc(FirebaseDB, "usuarios/NVJKnqX8MI7dJryiq0hW/contratista", id), newData);
+            dispatch(updateContractor(data));
+          } catch (error) {
+            console.error(error);
+          }
+
     }
 }

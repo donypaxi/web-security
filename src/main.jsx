@@ -6,11 +6,13 @@ import {App} from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { store } from './store'
+import { SideBarPage } from './contractor/page/SidebarPage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <SideBarPage/>
         <App />
       </BrowserRouter>
     </Provider>
