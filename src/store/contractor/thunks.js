@@ -1,10 +1,10 @@
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore"
 import { FirebaseDB } from "../../firebase/config"
 import { getContractor, loadContract, loadContractor, loadPedidoCompra } from "../../helpers"
-import { setContratista, setContratos, setPedidoCompra, updateContractor } from "./contractorSlice"
+import { addNewContratista, setContratista, setContratos, setPedidoCompra, updateContractor } from "./contractorSlice"
 
-export const startNewNote = (form) => {
-    return async() => {
+export const startNewContractor = (form) => {
+    return async(dispatch) => {
         const {empresa,ruc,telefono} = form
         const newContractor = {
             empresa,
@@ -12,6 +12,8 @@ export const startNewNote = (form) => {
             telefono
         }
         const docRef = await addDoc(collection(FirebaseDB,'usuarios/NVJKnqX8MI7dJryiq0hW/contratista'),newContractor)
+        newContractor.id= docRef.id
+        dispatch(addNewContratista(newContractor))
     }
 }
 

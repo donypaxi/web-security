@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { starLoadingContractor, starSaveContractor, startNewNote } from "../../store/contractor/thunks";
+import { starSaveContractor, startNewContractor } from "../../store/contractor/thunks";
 import { TableContractor } from "../layout/TableContractor";
 import { LoadingPage } from "./LoadingPage";
 import { desactivarContractor } from "../../store/contractor/contractorSlice";
@@ -36,8 +36,7 @@ export const ContractorPage = () => {
         setEmpresa('')
         setRuc('')
         setTelefono('')
-        dispatch(startNewNote({empresa,ruc,telefono}))
-        dispatch(starLoadingContractor())
+        dispatch(startNewContractor({empresa,ruc,telefono}))
       }
     }
     

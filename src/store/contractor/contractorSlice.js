@@ -16,6 +16,11 @@ export const contractorSlice = createSlice({
             state.contratistas= actions.payload
             state.mostrar = state.contratistas
         },
+        addNewContratista: (state, action ) => {
+            console.log(action.payload)
+            state.contratistas.push( action.payload );
+            // state.isSaving = false;
+        },
         setContratos:(state,actions)=>{
             state.contratos= actions.payload
         },
@@ -39,4 +44,4 @@ export const contractorSlice = createSlice({
     
     }
 });
-export const { setContratista,setContratos,setPedidoCompra,activeContractor,desactivarContractor,updateContractor } = contractorSlice.actions;
+export const { setContratista,addNewContratista,setContratos,setPedidoCompra,activeContractor,desactivarContractor,updateContractor } = contractorSlice.actions;
