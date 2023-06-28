@@ -3,13 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 export const contractorSlice = createSlice({
     name: 'contractor',
     initialState: {
-        contratistas:[]
+        contratistas:[],
+        mostrar:[]
+
     },
     reducers: {
         setContratista:(state,actions) => {
             state.contratistas= actions.payload
-        }    
+            state.mostrar = state.contratistas
+        },
+        lodingMostrar : (state,action)=> {
+        }
     
     }
 });
-export const { setContratista } = contractorSlice.actions;
+export const { setContratista,lodingMostrar } = contractorSlice.actions;

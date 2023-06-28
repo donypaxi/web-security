@@ -3,15 +3,16 @@ import { FirebaseDB } from "../../firebase/config"
 import { loadContractor } from "../../helpers"
 import { setContratista } from "./contractorSlice"
 
-export const startNewNote = ({razon,datos}) => {
+export const startNewNote = (form) => {
     return async() => {
-
+        const {empresa,ruc,telefono} = form
         const newContractor = {
-            razon,
-            datos
+            empresa,
+            ruc,
+            telefono
         }
 
-        const docRef = await addDoc(collection(FirebaseDB,'contratista'),newContractor)
+        const docRef = await addDoc(collection(FirebaseDB,'usuarios/NVJKnqX8MI7dJryiq0hW/contratista'),newContractor)
 
     }
 }

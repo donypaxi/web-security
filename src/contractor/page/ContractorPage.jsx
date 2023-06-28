@@ -1,35 +1,41 @@
 import { useState } from "react"
 import { useDispatch } from 'react-redux';
-import { startNewNote } from "../../store/contractor/thunks";
-import { LoadingPage } from "./loadingPage";
-import { TableContractor } from "./TableContractor";
+import { starLoadingContractor, startNewNote } from "../../store/contractor/thunks";
+import { TableContractor } from "../layout/TableContractor";
+import { LoadingPage } from "./LoadingPage";
 
 
 export const ContractorPage = () => {
 
     const dispatch =useDispatch()
     
-    const [razon, setRazon] = useState('')
-    const [datos, setdatos] = useState('')
+    const [empresa, setEmpresa] = useState('')
+    const [ruc, setRuc] = useState('')  
+    const [telefono, setTelefono] = useState('')
 
     const handleSend = (e) => {
-        dispatch(startNewNote({razon,datos}))
+        dispatch(startNewNote({empresa,ruc,telefono}))
+        dispatch(starLoadingContractor())
+        setEmpresa('')
+        setRuc('')
+        setTelefono('')
         e.preventDefault()
+
     }
   return (
     <>
         <LoadingPage/>
-        <div className="text-center bg-red-400 text-white py-3">SISTEMA DE SEGURIDAD</div>
+        <div className="text-center bg-red-400 text-white py-3 ">EMPRESAS CONTRATISTAS </div>
         <form className="bg-cyan-500 pt-5">
-            <label>Razon social</label>
-            <input type="text" onChange={(e)=>setRazon(e.target.value)} />
-            <br />
-            <br />
-            <label>Ingrese sus datos</label>
-            <input type="text"  onChange={(e)=>setdatos(e.target.value)}/>
-            <br />
-            <br />
-            <button className="bg-green-400 rounded-sm" type="submit" onClick={handleSend}>Enviar</button>
+          <div className="px-5 flex justify-center gap-5">
+            <label>Empresa</label>
+            <input type="text" value={empresa}  onChange={(e)=>setEmpresa(e.target.value)} />
+            <label>Ruc</label>
+            <input type="text" value={ruc}  onChange={(e)=>setRuc(e.target.value)}/>
+            <label>Teléfono</label>
+            <input type="text" value={telefono}  onChange={(e)=>setTelefono(e.target.value)}/>
+          </div>
+            <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>Crear</button>
         </form>
         <TableContractor/>
     </>
