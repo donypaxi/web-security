@@ -4,6 +4,8 @@ export const contractorSlice = createSlice({
     name: 'contractor',
     initialState: {
         contratistas:[],
+        pedidoCompras:[],
+        contratos:[],
         mostrar:[]
 
     },
@@ -12,9 +14,13 @@ export const contractorSlice = createSlice({
             state.contratistas= actions.payload
             state.mostrar = state.contratistas
         },
-        lodingMostrar : (state,action)=> {
+        setContratos:(state,actions)=>{
+            state.contratos= actions.payload
+        },
+        setPedidoCompra:(state,actions)=>{
+            state.pedidoCompras= actions.payload
         }
     
     }
 });
-export const { setContratista,lodingMostrar } = contractorSlice.actions;
+export const { setContratista,setContratos,setPedidoCompra } = contractorSlice.actions;

@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { starLoadingContractor } from "../../store/contractor/thunks"
+import { starLoadingContractor, starLoadingPedidoCompra, startNewPedidoCompra } from "../../store/contractor/thunks"
+import { TablePedidoCompra } from "../layout/TablePedidoCompra"
 
 export const PedidoCompraPage = () => {
     const  dispatch= useDispatch()
     const {contratistas}=useSelector(state=> state.contractor)
-    const empresas = contratistas.map(contratista => contratista.empresa)
+    const empresas = contratistas.map(contratista => ({id:contratista.id, nombre:contratista.empresa}))
     const [pc, setPc] = useState('')
-    const [contrato, setContrato] = useState('')  
     const [servicio, setServicio] = useState('')
     const [nombreEmpresa, setNombreEmpresa] = useState('')
-
+    const newPC = {pc,servicio,nombreEmpresa  }
     const handleSend = (e) => {
         setPc('')
-        setContrato('')
         setServicio('')
         setNombreEmpresa('')
         e.preventDefault()
-      console.log(nombreEmpresa)
+        console.log(newPC)
+        dispatch(startNewPedidoCompra(newPC))
+        dispatch(starLoadingPedidoCompra())
+
     }
     useEffect(() => {
       dispatch(starLoadingContractor())
+      dispatch(starLoadingPedidoCompra())
+
     }, [])
     
   return (
@@ -33,8 +37,6 @@ export const PedidoCompraPage = () => {
             <input type="text" value={pc}  onChange={(e)=>setPc(e.target.value)} />
           </div>
           <div>
-            <label>Contrato</label>
-            <input type="text" value={contrato}  onChange={(e)=>setContrato(e.target.value)}/>
           </div>
           <div>
             <label>Servicio</label>
@@ -47,14 +49,15 @@ export const PedidoCompraPage = () => {
               onChange={(e)=>setNombreEmpresa(e.target.value)}
             >
               <option value="" disabled >Seleccione una opción</option>
-              {empresas.map((nombre,i) => (
-                <option key={i} value ={nombre}>{nombre} </option>
+              {empresas.map((empresa) => (
+                <option key={empresa.id} value ={empresa.nombre}>{empresa.nombre} </option>
               ))}
             </select>
           </div>
         </div>
         <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>Crear</button>
       </form>
+      <TablePedidoCompra/>
     </>
   )
 }
