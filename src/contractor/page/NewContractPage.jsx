@@ -1,26 +1,49 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { starLoadingContract, starLoadingContractor, startNewContract } from "../../store/contractor/thunks"
+import { starLoadingContract, starLoadingContractor, starSaveContract, startNewContract } from "../../store/contractor/thunks"
 import { TableContract } from "../layout/TableContract"
+import { desactivarContractor } from "../../store/contractor/contractorSlice"
 
-export const NewContract = () => {
+export const NewContractPage = () => {
     const  dispatch= useDispatch()
+    
     const {contratistas}=useSelector(state=> state.contractor)
     const empresas = contratistas.map(contratista => ({id:contratista.id, nombre:contratista.empresa}))
+
+    const {dataEdit,activeEdit} =useSelector(state => state.contractor)  
     const [numero, setNumero] = useState('')
     const [nombre, setNombre] = useState('')
     const [nombreEmpresa, setNombreEmpresa] = useState('')
+    const [id, setId] = useState('')
     const year = new Date().getFullYear();
-    const newNumero = `Es-c-${numero}-${year}`
-    const newContract = {contrato:newNumero,nombreEmpresa,nombre  }
+    const contrato = `Es-c-${numero}-${year}`
+    const newContract = {contrato,numero,nombreEmpresa,nombre  }
+
+    useEffect(() => {
+      if (activeEdit) {
+        setNumero(dataEdit.numero);
+        setNombre(dataEdit.nombre);
+        setNombreEmpresa(dataEdit.nombreEmpresa);
+        setId(dataEdit.id);
+      } else {
+        setNumero('');
+        setNombre('');
+        setNombreEmpresa('');
+      }
+    }, [activeEdit, dataEdit.numero, dataEdit.nombre, dataEdit.nombreEmpresa]);
 
     const handleSend = (e) => {
-      setNumero('')
-      setNombreEmpresa('')
-      setNombre('')
       e.preventDefault()
-      dispatch(startNewContract(newContract))
-      dispatch(starLoadingContract())
+      if(activeEdit){
+        dispatch(starSaveContract({contrato,numero,nombre,nombreEmpresa,id}))
+        console.log('actualizando')
+        dispatch(desactivarContractor())
+      }else{
+        setNumero('')
+        setNombreEmpresa('')
+        setNombre('')
+        dispatch(startNewContract(newContract))
+      }
     }
     useEffect(() => {
       dispatch(starLoadingContractor())
@@ -53,7 +76,7 @@ export const NewContract = () => {
             </select>
           </div>
         </div>
-        <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>Crear</button>
+        <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>{activeEdit? 'Guardar' : 'Crear'}</button>
       </form>
       <TableContract/>
     </>

@@ -1,12 +1,13 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { starLoadingContractor } from "../../store/contractor/thunks"
+import { starLoadingContract, starLoadingContractor } from "../../store/contractor/thunks"
 
 export const LoadingPage = () => {
     const dispatch =useDispatch()
     useEffect(() => {
         
         dispatch(starLoadingContractor())
+        dispatch(starLoadingContract())
     }, [])
     
   return (

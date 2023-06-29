@@ -1,25 +1,51 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { starLoadingContractor, starLoadingPedidoCompra, startNewPedidoCompra } from "../../store/contractor/thunks"
+import { starLoadingContractor, starLoadingPedidoCompra, starSavePC, startNewPedidoCompra } from "../../store/contractor/thunks"
 import { TablePedidoCompra } from "../layout/TablePedidoCompra"
+import { desactivarContractor } from "../../store/contractor/contractorSlice"
 
 export const PedidoCompraPage = () => {
     const  dispatch= useDispatch()
     const {contratistas}=useSelector(state=> state.contractor)
+    const {dataEdit, activeEdit} =useSelector(state=> state.contractor)
     const empresas = contratistas.map(contratista => ({id:contratista.id, nombre:contratista.empresa}))
+    
     const [pc, setPc] = useState('')
     const [servicio, setServicio] = useState('')
     const [nombreEmpresa, setNombreEmpresa] = useState('')
+    const [id, setId] = useState('')
     const newPC = {pc,servicio,nombreEmpresa  }
-    const handleSend = (e) => {
+
+     
+
+    useEffect(() => {
+      if(activeEdit){
+        setPc(dataEdit.pc)
+        setServicio(dataEdit.servicio)
+        setNombreEmpresa(dataEdit.nombreEmpresa)
+        setId(dataEdit.id);
+      }else {
         setPc('')
         setServicio('')
         setNombreEmpresa('')
-        e.preventDefault()
-        console.log(newPC)
-        dispatch(startNewPedidoCompra(newPC))
-        dispatch(starLoadingPedidoCompra())
+      }
+    }, [activeEdit])
+    
 
+
+
+    const handleSend = (e) => {
+      e.preventDefault()
+      if(activeEdit){
+        dispatch(starSavePC({pc,servicio,nombreEmpresa,id}))
+        dispatch(desactivarContractor())
+      }else {
+        setPc('')
+        setServicio('')
+        setNombreEmpresa('')
+        dispatch(startNewPedidoCompra(newPC))
+      }
+          
     }
     useEffect(() => {
       dispatch(starLoadingContractor())
@@ -55,7 +81,7 @@ export const PedidoCompraPage = () => {
             </select>
           </div>
         </div>
-        <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>Crear</button>
+        <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>{activeEdit ? 'Guardar' : 'Crear'}</button>
       </form>
       <TablePedidoCompra/>
     </>

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const contractorSlice = createSlice({
     name: 'contractor',
     initialState: {
-        formContractor:{},
+        dataEdit:{},
         contratistas:[],
         pedidoCompras:[],
         contratos:[],
@@ -16,21 +16,25 @@ export const contractorSlice = createSlice({
             state.contratistas= actions.payload
             state.mostrar = state.contratistas
         },
-        addNewContratista: (state, action ) => {
-            console.log(action.payload)
-            state.contratistas.push( action.payload );
+        addNewContratista: (state, actions ) => {
+            state.contratistas.push( actions.payload );
             // state.isSaving = false;
+        },
+        addNewPC:(state,actions)=>{
+            state.pedidoCompras.push(actions.payload)
         },
         setContratos:(state,actions)=>{
             state.contratos= actions.payload
         },
+        addNewContrato:(state,actions)=>{
+            state.contratos.push(actions.payload)
+        },
         setPedidoCompra:(state,actions)=>{
             state.pedidoCompras= actions.payload
         },
-        activeContractor:(state,actions)=> {
+        active:(state,actions)=> {
             state.activeEdit= true
-            state.formContractor={...actions.payload}
-            console.log(state.activeEdit)
+            state.dataEdit={...actions.payload}
         },
         desactivarContractor:(state,actions) => {
             state.activeEdit= false
@@ -40,8 +44,32 @@ export const contractorSlice = createSlice({
             if (index !== -1) {
                 state.contratistas.splice(index, 1, payload);
             }
+        },
+        updateContract:(state,{payload}) =>{
+            const index = state.contratos.findIndex((contrato) => contrato.id === payload.id);
+            if (index !== -1) {
+                state.contratos.splice(index, 1, payload);
+            }
+        },
+        updatePC:(state,{payload})=>{
+            const index = state.pedidoCompras.findIndex((pedidoCompra)=>pedidoCompra.id===payload.id)
+            if(index !== -1){
+                state.pedidoCompras.splice(index,1,payload)
+            }
+        },
+        deleteContractorById:(state,{payload}) => {
+            console.log(payload)
+            state.contratistas = state.contratistas.filter( contratista => contratista.id !== payload );
+        },
+        deleteContractById:(state,{payload}) => {
+            console.log(payload)
+            state.contratos = state.contratos.filter( contrato => contrato.id !== payload );
+        },
+        deletePCById:(state,{payload}) => {
+            state.pedidoCompras = state.pedidoCompras.filter( pedidoCompra => pedidoCompra.id !== payload );
+
         }
     
     }
 });
-export const { setContratista,addNewContratista,setContratos,setPedidoCompra,activeContractor,desactivarContractor,updateContractor } = contractorSlice.actions;
+export const { setContratista,addNewContratista,setContratos,addNewContrato,addNewPC,setPedidoCompra,active,desactivarContractor,updateContractor,updateContract,updatePC,deleteContractorById,deleteContractById,deletePCById } = contractorSlice.actions;
