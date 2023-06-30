@@ -46,19 +46,21 @@ export const ContractorPage = () => {
     
   return (
     <>
-        <div className="text-center bg-red-400 text-white py-3 ">EMPRESAS CONTRATISTAS </div>
-        <form className="bg-cyan-500 pt-5">
-          <div className="px-5 flex justify-center gap-5">
-            <label>Empresa</label>
-            <input type="text"  value={empresa}   onChange={(e)=>setEmpresa(e.target.value)} />
-            <label>Ruc</label>
-            <input type="text" value={ruc}  onChange={(e)=>setRuc(e.target.value)}/>
-            <label>Teléfono</label>
-            <input type="text" value={telefono}  onChange={(e)=>setTelefono(e.target.value)}/>
-          </div>
-            <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>{activeEdit? 'Guardar' : 'Crear'}</button>
-        </form>
-        <TableContractor/>
+        <div>
+          <div className="text-center bg-red-400 text-white py-3 ">EMPRESAS CONTRATISTAS </div>
+          <form className="bg-cyan-500 pt-5">
+            <div className="px-5 flex justify-center gap-5">
+              <label>Empresa</label>
+              <input type="text"  value={empresa}   onChange={(e)=>setEmpresa(e.target.value)} />
+              <label>Ruc</label>
+              <input type="text" value={ruc}  onChange={(e)=>setRuc(e.target.value)}/>
+              <label>Teléfono</label>
+              <input type="text" value={telefono}  onChange={(e)=>setTelefono(e.target.value)}/>
+            </div>
+              <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>{activeEdit? 'Guardar' : 'Crear'}</button>
+          </form>
+          <TableContractor/>
+        </div>
     </>
   )
 }
