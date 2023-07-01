@@ -55,7 +55,7 @@ export const PedidoCompraPage = () => {
     
   return (
     <>
-      <div>
+      <div className="w-full">
         <div className="text-center bg-red-400 text-white py-3 ">NUEVO PEDIDO COMPRA </div>
         <form className="bg-cyan-500 pt-5">
           <div className="flex justify-center gap-5 px-5">

@@ -46,7 +46,7 @@ export const ContractorPage = () => {
     
   return (
     <>
-        <div>
+        <div className="w-full">
           <div className="text-center bg-red-400 text-white py-3 ">EMPRESAS CONTRATISTAS </div>
           <form className="bg-cyan-500 pt-5">
             <div className="px-5 flex justify-center gap-5">

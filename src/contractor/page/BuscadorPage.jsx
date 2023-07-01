@@ -1,8 +1,12 @@
-
+import BuildIcon from '@mui/icons-material/Build';
 export const BuscadorPage = () => {
   return (
     <>
-        <h2>BUSCADOR</h2>
+
+        <div className="flex gap-5 justify-center align-center w-full h-full my-auto text-3xl">
+        <p>EN CONTRUCCIÓN PROGRAMADORES TRABAJANDO... </p>
+        <BuildIcon fontSize="large"/>
+        </div>
         
     </>
   )
