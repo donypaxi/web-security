@@ -5,7 +5,6 @@ import { TableContractor } from "../layout/TableContractor";
 import { desactivarContractor } from "../../store/contractor/contractorSlice";
 import { Box, Button, Grid, TextField } from "@mui/material";
 
-
 export const ContractorPage = () => {
   const dispatch =useDispatch()
   const {dataEdit,activeEdit} =useSelector(state => state.contractor)  
@@ -15,6 +14,10 @@ export const ContractorPage = () => {
   const [telefono, setTelefono] = useState('')
   const [id, setId] = useState('')
   const [email, setEmail] = useState('')
+  const [error, setError] = useState({
+    error:'false',
+    msg:'ingrese un ruc valido'
+  })
   useEffect(() => {
     if (activeEdit) {
       setEmpresa(dataEdit.empresa);
@@ -28,6 +31,21 @@ export const ContractorPage = () => {
     }
   }, [activeEdit, dataEdit.empresa, dataEdit.ruc, dataEdit.telefono]);
 
+  const handleTelefonoChange = (e) => {
+    setTelefono(Math.max(0, parseInt(e.target.value)))
+  }
+  const handleRucChange = (e) => {
+    setRuc(Math.max(0, parseInt(e.target.value)))
+    
+  }
+
+  const handleCancel = () => {
+    setEmpresa('')
+    setRuc('')
+    setTelefono('')
+    dispatch(desactivarContractor())
+    
+  }
   const handleSend = (e) => {
       e.preventDefault()
       if(activeEdit){
@@ -51,7 +69,7 @@ export const ContractorPage = () => {
         <div className="w-full">
           <br />
           <p className="text-slate-700 px-10 text-2xl font-medium">DATOS DE LA NUEVA EMPRESA CONTRATISTA</p>
-          <form className="px-10 flex flex-col">
+          <form onSubmit={handleSend} className="px-10 flex flex-col">
 
           {/* <Box
             component="form"
@@ -69,17 +87,20 @@ export const ContractorPage = () => {
                   value={empresa}
                   onChange={(e)=>setEmpresa(e.target.value)}
                   fullWidth
+                  // helperText={(empresa.length>10) ? 'Error: No cumple la condición' : ''}
                   >
                   </TextField>
                 </Grid>
                 <Grid item xs={6} md={6}>
                   <TextField
+                  error={!error.error}
+                  helperText={!error.error? 'Ingrese un Ruc Valido':''}
                   id="ruc"
                   label="ruc"
-                  type="text"
+                  type="Number"
                   variant="standard"
                   value={ruc}
-                  onChange={(e)=>setRuc(e.target.value)}
+                  onChange={handleRucChange}
                   fullWidth
                   
                   >
@@ -89,24 +110,33 @@ export const ContractorPage = () => {
                   <TextField
                   id="telefono"
                   label="telefono"
-                  type="text"
+                  type="Number"
                   variant="standard"
                   value={telefono}
-                  onChange={(e)=>setTelefono(e.target.value)}
+                  onChange={handleTelefonoChange}
                   fullWidth
-
                   >
                   </TextField>
                 </Grid>
             </Grid>
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              sx={{my:2, alignSelf:'flex-end'}}
-            >
-              {activeEdit? 'Guardar' : 'Crear'}
-            </Button>
+            <div className="flex justify-end gap-5">
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleCancel}
+                sx={{my:2, alignSelf:'flex-end',display: activeEdit ? 'block' : 'none' }}
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                sx={{my:2, alignSelf:'flex-end'}}
+              >
+                {activeEdit? 'Guardar' : 'Crear'}
+              </Button>
+            </div>
           {/* </Box> */}
           </form>
 

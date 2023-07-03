@@ -33,8 +33,8 @@ export const TableContract = () => {
               <td>{item.nombre}</td>
               <td></td>
               <td></td>
-              <td><button onClick={()=>onBtnEdit(item.id)} className="rounded-xl py-1 px-3 bg-green-600 text-white">Editar</button></td>
-              <td><button onClick={()=>onBtnDelete(item.id)} className="rounded-xl py-1 px-3 bg-red-600 text-white">Eliminar</button></td>
+              <td><button onClick={()=>onBtnEdit(item.id)} className="rounded-xl py-1 px-3 bg-green-400 text-white">Editar</button></td>
+              <td><button onClick={()=>onBtnDelete(item.id)} className="rounded-xl py-1 px-3 bg-red-400 text-white">Eliminar</button></td>
             </tr>
             )
           )}

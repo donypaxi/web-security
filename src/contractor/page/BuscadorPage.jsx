@@ -1,5 +1,8 @@
 import BuildIcon from '@mui/icons-material/Build';
 export const BuscadorPage = () => {
+
+
+  
   return (
     <>
 
@@ -8,6 +11,7 @@ export const BuscadorPage = () => {
         <BuildIcon fontSize="large"/>
         </div>
         
+
     </>
   )
 }

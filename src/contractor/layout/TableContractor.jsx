@@ -32,8 +32,8 @@ export const TableContractor = () => {
                 <td>{item.ruc}</td>
                 <td>{item.telefono}</td>
                 
-                <td className="w-12 text-rigth"><button onClick={()=>onBtnEdit(item.id)} className=" rounded-xl py-1 px-3 bg-green-600 text-white">Editar</button></td>
-                <td className="w-12 text-rigth"><button onClick={()=>onBtnDelete(item.id)} className="rounded-xl py-1 px-3 bg-red-600 text-white">Eliminar</button></td>
+                <td className="w-12 text-rigth"><button onClick={()=>onBtnEdit(item.id)} className=" rounded-xl py-1 px-3 bg-green-500 hover:bg-green-400 duration-200 text-white">Editar</button></td>
+                <td className="w-12 text-rigth"><button onClick={()=>onBtnDelete(item.id)} className="rounded-xl py-1 px-3 bg-red-500 hover:bg-red-400 duration-200 text-white">Eliminar</button></td>
               </tr>
               )
             )}
