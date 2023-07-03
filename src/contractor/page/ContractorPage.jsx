@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { starLoadingContract, starLoadingContractor, starSaveContractor, startNewContractor } from "../../store/contractor/thunks";
 import { TableContractor } from "../layout/TableContractor";
 import { desactivarContractor } from "../../store/contractor/contractorSlice";
+import { Box, Button, Grid, TextField } from "@mui/material";
 
 
 export const ContractorPage = () => {
@@ -13,6 +14,7 @@ export const ContractorPage = () => {
   const [ruc, setRuc] = useState('')  
   const [telefono, setTelefono] = useState('')
   const [id, setId] = useState('')
+  const [email, setEmail] = useState('')
   useEffect(() => {
     if (activeEdit) {
       setEmpresa(dataEdit.empresa);
@@ -47,18 +49,69 @@ export const ContractorPage = () => {
   return (
     <>
         <div className="w-full">
-          <div className="text-center bg-red-400 text-white py-3 ">EMPRESAS CONTRATISTAS </div>
-          <form className="bg-cyan-500 pt-5">
-            <div className="px-5 flex justify-center gap-5">
-              <label>Empresa</label>
-              <input type="text"  value={empresa}   onChange={(e)=>setEmpresa(e.target.value)} />
-              <label>Ruc</label>
-              <input type="text" value={ruc}  onChange={(e)=>setRuc(e.target.value)}/>
-              <label>Teléfono</label>
-              <input type="text" value={telefono}  onChange={(e)=>setTelefono(e.target.value)}/>
-            </div>
-              <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>{activeEdit? 'Guardar' : 'Crear'}</button>
+          <br />
+          <p className="text-slate-700 px-10 text-2xl font-medium">DATOS DE LA NUEVA EMPRESA CONTRATISTA</p>
+          <form className="px-10 flex flex-col">
+
+          {/* <Box
+            component="form"
+            onSubmit={handleSend}
+            sx={{width:'100%',border:'1px solid black', px:'20px'}}
+            > */}
+            <Grid container spacing={3} sx={{px:'0px'}}>
+             
+                <Grid item xs={12} md={6}>
+                  <TextField
+                  id="empresa"
+                  label="empresa"
+                  type="text"
+                  variant="standard"
+                  value={empresa}
+                  onChange={(e)=>setEmpresa(e.target.value)}
+                  fullWidth
+                  >
+                  </TextField>
+                </Grid>
+                <Grid item xs={6} md={6}>
+                  <TextField
+                  id="ruc"
+                  label="ruc"
+                  type="text"
+                  variant="standard"
+                  value={ruc}
+                  onChange={(e)=>setRuc(e.target.value)}
+                  fullWidth
+                  
+                  >
+                  </TextField>
+                </Grid>
+                <Grid item xs={6} md={6}>
+                  <TextField
+                  id="telefono"
+                  label="telefono"
+                  type="text"
+                  variant="standard"
+                  value={telefono}
+                  onChange={(e)=>setTelefono(e.target.value)}
+                  fullWidth
+
+                  >
+                  </TextField>
+                </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              sx={{my:2, alignSelf:'flex-end'}}
+            >
+              {activeEdit? 'Guardar' : 'Crear'}
+            </Button>
+          {/* </Box> */}
           </form>
+
+          <div className="text-center bg-[#235DDB] text-white py-3 mb-5 font-semibold ">EMPRESAS CONTRATISTAS </div>
+          
           <TableContractor/>
         </div>
     </>

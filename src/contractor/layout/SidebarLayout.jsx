@@ -1,6 +1,6 @@
 import sc from '../../assets/img/sc.png'
 import { Grid } from "@mui/material"
-import { Navbar } from "../components/Navbar"
+import { Sidebar } from "../components/"
 
  
 export const SidebarLayout = () => {
@@ -19,7 +19,7 @@ export const SidebarLayout = () => {
                 <div className='z-30 opacity-70 h-full w-full bg-slate-800 '>
                 </div>
                 <div className='absolute top-0 left-0  h-full w-full z-30'>
-                    <Navbar/>
+                    <Sidebar/>
                 </div>
             </div>
         </Grid> 

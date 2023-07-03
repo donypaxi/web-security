@@ -16,30 +16,30 @@ export const TableContractor = () => {
     }
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Empresa</th>
-            <th>Ruc</th>
-            <th>telefono</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          {contratistas.map((item) => (
-            <tr key={item.id}>
-              <td>{item.empresa}</td>
-              <td>{item.ruc}</td>
-              <td>{item.telefono}</td>
-              <td></td>
-              <td></td>
-              <td><button onClick={()=>onBtnEdit(item.id)} className="rounded-xl py-1 px-3 bg-green-600 text-white">Editar</button></td>
-              <td><button onClick={()=>onBtnDelete(item.id)} className="rounded-xl py-1 px-3 bg-red-600 text-white">Eliminar</button></td>
+      <div className="px-10">
+        <table className="min-w-full divide-gray-800">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="text-left">Empresa</th>
+              <th className="text-left">Ruc</th>
+              <th className="text-left">telefono</th>
             </tr>
-            )
-          )}
-          </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-300">
+            {contratistas.map((item) => (
+              <tr key={item.id}>
+                <td>{item.empresa}</td>
+                <td>{item.ruc}</td>
+                <td>{item.telefono}</td>
+                
+                <td className="w-12 text-rigth"><button onClick={()=>onBtnEdit(item.id)} className=" rounded-xl py-1 px-3 bg-green-600 text-white">Editar</button></td>
+                <td className="w-12 text-rigth"><button onClick={()=>onBtnDelete(item.id)} className="rounded-xl py-1 px-3 bg-red-600 text-white">Eliminar</button></td>
+              </tr>
+              )
+            )}
+            </tbody>
+        </table>
+      </div>
     
     </>
   )
