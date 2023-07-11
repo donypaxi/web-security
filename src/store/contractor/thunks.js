@@ -1,7 +1,7 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 import { FirebaseDB } from "../../firebase/config"
-import { loadContract, loadContractor, loadPedidoCompra } from "../../helpers"
-import { addNewContratista, addNewContrato, addNewPC, deleteContractById, deleteContractorById, deletePCById, setContratista, setContratos, setPedidoCompra, updateContract, updateContractor, updatePC } from "./contractorSlice"
+import { loadContractor, loadRecords } from "../../helpers"
+import { addNewContratista, addNewRegister, deleteContractorById, deleteRegisterById, setContratista,  setMostrar, setRecords, updateContractor, updateRegister } from "./contractorSlice"
 
 export const startNewContractor = (form) => {
     return async(dispatch) => {
@@ -17,38 +17,25 @@ export const startNewContractor = (form) => {
     }
 }
 
-export const startNewContract = (contract) => {
+
+export const startNewRegister = (data) => {
     return async(dispatch) => {
-        const {contrato,numero,nombreEmpresa,nombre} = contract
-        const newContrato = {contrato,numero,nombreEmpresa,nombre}
-        const docRef = await addDoc(collection(FirebaseDB,'usuarios/NVJKnqX8MI7dJryiq0hW/contratos'),newContrato)
-        newContrato.id=docRef.id
-        dispatch(addNewContrato(newContrato))
+        const {register,numero,servicio,empresa,type} = data
+        const newRegister = {register,numero,servicio,empresa,type}
+        const docRef = await addDoc(collection(FirebaseDB,'usuarios/NVJKnqX8MI7dJryiq0hW/registros'),newRegister)
+        newRegister.id=docRef.id
+        dispatch(addNewRegister(newRegister))
     }
 }
 
-export const startNewPedidoCompra = (newPC) => {
-    return async(dispatch) => {
-        const docRef = await addDoc(collection(FirebaseDB,'/usuarios/NVJKnqX8MI7dJryiq0hW/pedidos-compras'),newPC)
-        newPC.id=docRef.id
-        dispatch(addNewPC(newPC))
-
-    }
-}
-
-export const starLoadingContract= () => {
+export const starLoadingRecords= () => {
     return async(dispatch)=> {
-        const arrayContratos= await loadContract()
-        dispatch(setContratos(arrayContratos))
+        const arrayRegistros= await loadRecords()
+        dispatch(setRecords(arrayRegistros))
+        // dispatch(setMostrar(arrayRegistros))
     }
 }
 
-export const starLoadingPedidoCompra= () => {
-    return async(dispatch)=> {
-        const arrayContratos= await loadPedidoCompra()
-        dispatch(setPedidoCompra(arrayContratos))
-    }
-}
 
 export const starLoadingContractor= () => {
     return async(dispatch)=> {
@@ -72,15 +59,15 @@ export const starSaveContractor = (data) => {
     }
 }
 
-export const starSaveContract = (data) => {
+
+export const starSaveRegister = (data) => {
     return async (dispatch) => {
         try {
-            const { contrato, numero,nombre,nombreEmpresa, id } = data;
-            const newData = { contrato, numero, nombre, nombreEmpresa };
-            console.log(id)
+            const { register,numero, servicio,empresa,type, id } = data;
+            const newData = { register,numero, servicio, empresa, type };
             
-            const resp = await updateDoc(doc(FirebaseDB, "usuarios/NVJKnqX8MI7dJryiq0hW/contratos", id), newData);
-            dispatch(updateContract(data));
+            const resp = await updateDoc(doc(FirebaseDB, "usuarios/NVJKnqX8MI7dJryiq0hW/registros", id), newData);
+            dispatch(updateRegister(data));
           } catch (error) {
             console.error(error);
           }
@@ -88,25 +75,6 @@ export const starSaveContract = (data) => {
     }
 }
 
-export const starSavePC =(data) => {
-    return async(dispatch) => {
-        const {pc,servicio,nombreEmpresa,id} = data
-        const newData = {pc,servicio,nombreEmpresa}
-        await updateDoc(doc(FirebaseDB,'usuarios/NVJKnqX8MI7dJryiq0hW/pedidos-compras',id),newData)
-        console.log(data)
-        dispatch(updatePC(data))
-    }
-}
-
-export const startDeletContract = (id) => {
-    return async( dispatch) => {
-
-        const docRef = doc( FirebaseDB, `/usuarios/NVJKnqX8MI7dJryiq0hW/contratos/${id}`);
-        await deleteDoc( docRef );
-        dispatch( deleteContractById(id) );
-
-    }
-}
 
 export const startDeletingContractor = (id) => {
     return async( dispatch) => {
@@ -118,12 +86,13 @@ export const startDeletingContractor = (id) => {
     }
 }
 
-export const startDeletePC = (id) => {
+export const startDeletRegister = (id) => {
     return async( dispatch) => {
 
-        const docRef = doc( FirebaseDB, `/usuarios/NVJKnqX8MI7dJryiq0hW/pedidos-compras/${id}`);
+        const docRef = doc( FirebaseDB, `/usuarios/NVJKnqX8MI7dJryiq0hW/registros/${id}`);
         await deleteDoc( docRef );
-        dispatch( deletePCById(id));
+        dispatch( deleteRegisterById(id) );
 
     }
 }
+

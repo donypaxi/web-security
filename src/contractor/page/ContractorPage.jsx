@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { starLoadingContract, starLoadingContractor, starSaveContractor, startNewContractor } from "../../store/contractor/thunks";
+import { starLoadingContractor, starSaveContractor, startNewContractor } from "../../store/contractor/thunks";
 import { TableContractor } from "../layout/TableContractor";
 import { desactivarContractor } from "../../store/contractor/contractorSlice";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 
 export const ContractorPage = () => {
   const dispatch =useDispatch()
@@ -13,7 +13,6 @@ export const ContractorPage = () => {
   const [ruc, setRuc] = useState('')  
   const [telefono, setTelefono] = useState('')
   const [id, setId] = useState('')
-  const [email, setEmail] = useState('')
   const [error, setError] = useState({
     error:'false',
     msg:'ingrese un ruc valido'
@@ -61,7 +60,6 @@ export const ContractorPage = () => {
     }
     useEffect(() => {
       dispatch(starLoadingContractor())
-      dispatch(starLoadingContract())
     }, [])
     
   return (
@@ -70,54 +68,47 @@ export const ContractorPage = () => {
           <br />
           <p className="text-slate-700 px-10 text-2xl font-medium">DATOS DE LA NUEVA EMPRESA CONTRATISTA</p>
           <form onSubmit={handleSend} className="px-10 flex flex-col">
-
-          {/* <Box
-            component="form"
-            onSubmit={handleSend}
-            sx={{width:'100%',border:'1px solid black', px:'20px'}}
-            > */}
             <Grid container spacing={3} sx={{px:'0px'}}>
-             
-                <Grid item xs={12} md={6}>
-                  <TextField
-                  id="empresa"
-                  label="empresa"
-                  type="text"
-                  variant="standard"
-                  value={empresa}
-                  onChange={(e)=>setEmpresa(e.target.value)}
-                  fullWidth
-                  // helperText={(empresa.length>10) ? 'Error: No cumple la condición' : ''}
-                  >
-                  </TextField>
-                </Grid>
-                <Grid item xs={6} md={6}>
-                  <TextField
-                  error={!error.error}
-                  helperText={!error.error? 'Ingrese un Ruc Valido':''}
-                  id="ruc"
-                  label="ruc"
-                  type="Number"
-                  variant="standard"
-                  value={ruc}
-                  onChange={handleRucChange}
-                  fullWidth
-                  
-                  >
-                  </TextField>
-                </Grid>
-                <Grid item xs={6} md={6}>
-                  <TextField
-                  id="telefono"
-                  label="telefono"
-                  type="Number"
-                  variant="standard"
-                  value={telefono}
-                  onChange={handleTelefonoChange}
-                  fullWidth
-                  >
-                  </TextField>
-                </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                id="empresa"
+                label="empresa"
+                type="text"
+                variant="standard"
+                value={empresa}
+                onChange={(e)=>setEmpresa(e.target.value)}
+                fullWidth
+                // helperText={(empresa.length>10) ? 'Error: No cumple la condición' : ''}
+                >
+                </TextField>
+              </Grid>
+              <Grid item xs={6} md={6}>
+                <TextField
+                error={!error.error}
+                helperText={!error.error? 'Ingrese un Ruc Valido':''}
+                id="ruc"
+                label="ruc"
+                type="Number"
+                variant="standard"
+                value={ruc}
+                onChange={handleRucChange}
+                fullWidth
+                
+                >
+                </TextField>
+              </Grid>
+              <Grid item xs={6} md={6}>
+                <TextField
+                id="telefono"
+                label="telefono"
+                type="Number"
+                variant="standard"
+                value={telefono}
+                onChange={handleTelefonoChange}
+                fullWidth
+                >
+                </TextField>
+              </Grid>
             </Grid>
             <div className="flex justify-end gap-5">
               <Button
@@ -137,7 +128,6 @@ export const ContractorPage = () => {
                 {activeEdit? 'Guardar' : 'Crear'}
               </Button>
             </div>
-          {/* </Box> */}
           </form>
 
           <div className="text-center bg-[#235DDB] text-white py-3 mb-5 font-semibold ">EMPRESAS CONTRATISTAS </div>

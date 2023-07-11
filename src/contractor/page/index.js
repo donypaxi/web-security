@@ -1,6 +1,5 @@
 export * from './ContractorPage'
-export * from './PedidoCompraPage'
 export * from './SidebarPage'
-export * from './NewContractPage'
 export * from './BuscadorPage'
 export * from './HomePage'
+export * from './NewRegister'

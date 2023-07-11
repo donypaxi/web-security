@@ -2,16 +2,14 @@ import { Link } from "react-router-dom"
 import GiteIcon from '@mui/icons-material/Gite';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
 import SearchIcon from '@mui/icons-material/Search';
 
 export const Sidebar = () => {
 
     const links = [
         {enlace:'nuevo-contratista',icon:<GiteIcon/>, msg:'Nuevo Contratista'},
-        {enlace:'nuevo-contrato',icon:<NoteAddIcon/>, msg:'Nuevo Contrato'},
-        {enlace:'pedido-compra',icon:<LocalMallIcon/>, msg:'Pedido Compra'},
-        {enlace:'busqueda',icon:<SearchIcon/>, msg:'Buscador'},
+        {enlace:'nuevo-registro',icon:<NoteAddIcon/>,msg:'Nuevo Registro'},
+        {enlace:'busqueda',icon:<SearchIcon/>, msg:'Buscador'}
     ]
 
   return (

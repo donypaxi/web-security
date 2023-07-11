@@ -1,37 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { filterRegister } from '../../helpers';
 
 export const contractorSlice = createSlice({
     name: 'contractor',
     initialState: {
         dataEdit:{},
         contratistas:[],
-        pedidoCompras:[],
-        contratos:[],
+        records:[],
         mostrar:[],
+        filter:[],
         activeEdit:false
 
     },
     reducers: {
+        
         setContratista:(state,actions) => {
             state.contratistas= actions.payload
-            state.mostrar = state.contratistas
         },
         addNewContratista: (state, actions ) => {
             state.contratistas.push( actions.payload );
             // state.isSaving = false;
         },
-        addNewPC:(state,actions)=>{
-            state.pedidoCompras.push(actions.payload)
+        addNewRegister: (state, actions ) => {
+            state.records.push( actions.payload );
+            // state.isSaving = false;
         },
-        setContratos:(state,actions)=>{
-            state.contratos= actions.payload
-        },
-        addNewContrato:(state,actions)=>{
-            state.contratos.push(actions.payload)
-        },
-        setPedidoCompra:(state,actions)=>{
-            state.pedidoCompras= actions.payload
-        },
+        
         active:(state,actions)=> {
             state.activeEdit= true
             state.dataEdit={...actions.payload}
@@ -39,37 +33,42 @@ export const contractorSlice = createSlice({
         desactivarContractor:(state,actions) => {
             state.activeEdit= false
         },
+        setFilter :(state,{payload}) => {
+            // const {numero,type,empresa,servicio}= payload
+            const filter = filterRegister(state.records,payload)
+            state.mostrar= filter
+                
+            
+        },
+        setRecords:(state,actions)=>{
+            // state.mostrar = actions.payload
+            state.records= actions.payload
+            state.mostrar=state.records
+        },
         updateContractor:(state,{payload}) =>{
             const index = state.contratistas.findIndex((contratista) => contratista.id === payload.id);
             if (index !== -1) {
                 state.contratistas.splice(index, 1, payload);
             }
         },
-        updateContract:(state,{payload}) =>{
-            const index = state.contratos.findIndex((contrato) => contrato.id === payload.id);
+        updateRegister:(state,{payload})=> {
+            const index = state.records.findIndex((register) => register.id === payload.id);
             if (index !== -1) {
-                state.contratos.splice(index, 1, payload);
+                state.records.splice(index, 1, payload);
             }
+            state.mostrar=state.records
         },
-        updatePC:(state,{payload})=>{
-            const index = state.pedidoCompras.findIndex((pedidoCompra)=>pedidoCompra.id===payload.id)
-            if(index !== -1){
-                state.pedidoCompras.splice(index,1,payload)
-            }
-        },
+
         deleteContractorById:(state,{payload}) => {
             console.log(payload)
             state.contratistas = state.contratistas.filter( contratista => contratista.id !== payload );
         },
-        deleteContractById:(state,{payload}) => {
-            console.log(payload)
-            state.contratos = state.contratos.filter( contrato => contrato.id !== payload );
-        },
-        deletePCById:(state,{payload}) => {
-            state.pedidoCompras = state.pedidoCompras.filter( pedidoCompra => pedidoCompra.id !== payload );
+        
+        deleteRegisterById:(state,{payload}) => {
+            state.records = state.records.filter( register => register.id !== payload );
 
         }
-    
+        
     }
 });
-export const { setContratista,addNewContratista,setContratos,addNewContrato,addNewPC,setPedidoCompra,active,desactivarContractor,updateContractor,updateContract,updatePC,deleteContractorById,deleteContractById,deletePCById } = contractorSlice.actions;
+export const {setFilter,setMostrar,setContratista,addNewContratista,addNewRegister,setRecords,active,updateRegister,desactivarContractor,updateContractor,deleteContractorById,deleteRegisterById } = contractorSlice.actions;

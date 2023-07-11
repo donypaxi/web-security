@@ -22,7 +22,7 @@ export const TableContractor = () => {
             <tr>
               <th className="text-left">Empresa</th>
               <th className="text-left">Ruc</th>
-              <th className="text-left">telefono</th>
+              <th className="text-left">Telefono</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-300">

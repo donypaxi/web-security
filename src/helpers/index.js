@@ -1,4 +1,4 @@
 export * from './loadContractor'
-export * from './loadContract'
-export * from './loadPedidoCompra'
 export * from './getContractor'
+export * from './loadRecords'
+export * from './filterRegister'
