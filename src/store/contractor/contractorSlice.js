@@ -9,7 +9,8 @@ export const contractorSlice = createSlice({
         records:[],
         mostrar:[],
         filter:[],
-        activeEdit:false
+        activeEdit:false,
+        idRegister:''
 
     },
     reducers: {
@@ -67,8 +68,11 @@ export const contractorSlice = createSlice({
         deleteRegisterById:(state,{payload}) => {
             state.records = state.records.filter( register => register.id !== payload );
 
+        },
+        idRegister:(state,actions)=>{
+            state.idRegister=actions.payload
         }
         
     }
 });
-export const {setFilter,setMostrar,setContratista,addNewContratista,addNewRegister,setRecords,active,updateRegister,desactivarContractor,updateContractor,deleteContractorById,deleteRegisterById } = contractorSlice.actions;
+export const {setFilter,setMostrar,setContratista,addNewContratista,addNewRegister,setRecords,active,updateRegister,desactivarContractor,updateContractor,deleteContractorById,deleteRegisterById,idRegister } = contractorSlice.actions;

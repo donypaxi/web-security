@@ -96,3 +96,17 @@ export const startDeletRegister = (id) => {
     }
 }
 
+
+// PARTE FUNCIONAL DE LOS TRABAJORES POR PC Y CONTRATOS
+
+export const starSaveEmployee = (forms) => {
+    return async(dispatch) => {
+        const {id, ...formData} = forms
+        // const newEmployee = {
+        //     apPaterno,apMaterno,nombres,emo,sctrp,sctrs,iperc,capacit,epp,ropa,dni,foto
+        // }
+        const docRef = await addDoc(collection(FirebaseDB,`/usuarios/NVJKnqX8MI7dJryiq0hW/registros/${id}/personal`),formData)
+        // newEmployee.id= docRef.id
+        // dispatch(addNewContratista(newEmployee))
+    }
+}

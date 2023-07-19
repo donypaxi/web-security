@@ -12,6 +12,7 @@ export const NewRegister = () => {
     
     const {contratistas}=useSelector(state=> state.contractor)
     const empresas = contratistas.map(contratista => ({id:contratista.id, nombreEmpresa:contratista.empresa}))
+    const {records} =useSelector(state=> state.contractor)
     const {dataEdit,activeEdit} =useSelector(state => state.contractor)  
     const [type, setType] = useState('')
     const [numero, setNumero] = useState('')
@@ -19,6 +20,7 @@ export const NewRegister = () => {
     const [empresa, setEmpresa] = useState('')
     const [completeCampos, setCompleteCampos] = useState(true)
     const [id, setId] = useState('')
+    const [error, setError] = useState(false)
     const year = new Date().getFullYear();
     // const formatNumber = numero.padStart(3, '0');
     useEffect(() => {
@@ -43,6 +45,8 @@ export const NewRegister = () => {
     }, [activeEdit, dataEdit.numero, dataEdit.servicio, dataEdit.empresa,dataEdit.type]);
 
     const handleCancel = (e) => {
+      setError(false)
+
       setNumero('');
       setServicio('');
       setEmpresa('');
@@ -55,13 +59,9 @@ export const NewRegister = () => {
       
       if(activeEdit ){
         if(type==='contrato'){
-          const register = `Es-c-${numero.slice(0, 3).padStart(3, '0')}-${year}`
-          dispatch(starSaveRegister({register,numero,servicio,empresa,type,id}))
-          console.log('actualizando')
-          dispatch(desactivarContractor())
-          
-
-
+          const register = `Es-c-${numero.slice(0, 6).padStart(6, '0')}-${year}`
+            dispatch(starSaveRegister({register,numero,servicio,empresa,type,id}))
+            dispatch(desactivarContractor())
         }else {
           const register = `PC${4500000000 + parseInt(numero)}`
           dispatch(starSaveRegister({register,numero,servicio,empresa,type,id}))
@@ -71,27 +71,42 @@ export const NewRegister = () => {
         }
       }else{     
         if(type === 'contrato'){
-          const register = `Es-c-${numero.slice(0, 3).padStart(3, '0')}-${year}`
+          const register = `Es-c-${numero.slice(0, 6).padStart(6, '0')}-${year}`
           const newRegister = {register,numero,empresa,servicio,type}    
-          console.log(newRegister)
-          setNumero('')
-          setEmpresa('')
-          setServicio('')
-          setType('')
-          dispatch(startNewRegister(newRegister))
-          // dispatch(starLoadingRecords())
-
-        }else{
-            const register = `PC${4500000000 + parseInt(numero)}`
-            const newRegister = {register,numero,empresa,servicio,type}    
+          const result = records.find(item => item.register === register )
+          console.log(records)
+          console.log(result)
+          if(result){
+            setError(true)
+            console.log('El contrato ya existe')
+          }else {
+            console.log(newRegister,'probandin')
+            setError(false)
             setNumero('')
             setEmpresa('')
             setServicio('')
             setType('')
-            console.log(newRegister)
             dispatch(startNewRegister(newRegister))
-            // dispatch(starLoadingRecords())
 
+          }
+          // dispatch(starLoadingRecords())
+
+        }else{
+            const register = `PC${4500000000 + parseInt(numero)}`
+            const newRegister = {register,numero,empresa,servicio,type}
+            const result = records.find(item => item.register === register )
+            if(result){
+              setError(true)
+              console.log('El pedido de compra ya existe') 
+            }else {
+              setError(false)
+              setNumero('')
+              setEmpresa('')
+              setServicio('')
+              setType('')
+              console.log(newRegister)
+              dispatch(startNewRegister(newRegister))
+            }
         }
       }
     }
@@ -113,6 +128,8 @@ export const NewRegister = () => {
                 label='registro'
                 type='Number'
                 variant="standard"
+                error={error}
+                helperText='ingrese otro valor'
                 value={numero}
                 onChange={(e)=>{
                   const inputNumber = e.target.value.slice(0, 6);
@@ -202,7 +219,6 @@ export const NewRegister = () => {
                 {activeEdit? 'Guardar' : 'Crear'}
               </Button>
             </div>
-          {/* <button className="bg-green-400 rounded-xl  p-2 m-5" type="submit" onClick={handleSend}>{activeEdit? 'Guardar' : 'Crear'}</button> */}
         </form>
         <div className="text-center bg-[#235DDB] text-white py-3 mb-5 font-semibold ">LISTA DE CONTRATOS </div>
 
