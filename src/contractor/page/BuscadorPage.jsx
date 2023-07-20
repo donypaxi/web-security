@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { starLoadingContractor, starLoadingRecords, starSaveRegister, startNewRegister } from "../../store/contractor/thunks"
+import { starLoadingContractor, starLoadingEmployees, starLoadingRecords, starSaveRegister, startNewRegister } from "../../store/contractor/thunks"
 import { desactivarContractor, setFilter, setMostrar } from "../../store/contractor/contractorSlice"
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { TableSearch } from "../layout"
@@ -99,6 +99,7 @@ export const BuscadorPage = () => {
     useEffect(() => {
       dispatch(starLoadingContractor())
       dispatch(starLoadingRecords())
+      dispatch(starLoadingEmployees())
 
     }, [])
   return (

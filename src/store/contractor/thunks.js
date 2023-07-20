@@ -1,7 +1,8 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 import { FirebaseDB } from "../../firebase/config"
 import { loadContractor, loadRecords } from "../../helpers"
-import { addNewContratista, addNewRegister, deleteContractorById, deleteRegisterById, setContratista,  setMostrar, setRecords, updateContractor, updateRegister } from "./contractorSlice"
+import { addNewContratista, addNewEmployee, addNewRegister, deleteContractorById, deleteEmpleadoById, deleteRegisterById, setContratista,  setEmployees,  setMostrar, setRecords, updateContractor, updateRegister } from "./contractorSlice"
+import { loadEmployees } from "../../helpers/loadEmployees"
 
 export const startNewContractor = (form) => {
     return async(dispatch) => {
@@ -102,11 +103,31 @@ export const startDeletRegister = (id) => {
 export const starSaveEmployee = (forms) => {
     return async(dispatch) => {
         const {id, ...formData} = forms
-        // const newEmployee = {
-        //     apPaterno,apMaterno,nombres,emo,sctrp,sctrs,iperc,capacit,epp,ropa,dni,foto
-        // }
+        const newEmployee = formData
+        
         const docRef = await addDoc(collection(FirebaseDB,`/usuarios/NVJKnqX8MI7dJryiq0hW/registros/${id}/personal`),formData)
-        // newEmployee.id= docRef.id
-        // dispatch(addNewContratista(newEmployee))
+        newEmployee.id= docRef.id
+        console.log(newEmployee)
+        dispatch(addNewEmployee(newEmployee))
+    }
+}
+
+
+export const starLoadingEmployees= (id) => {
+    return async(dispatch)=> {
+        const arrayRegistros= await loadEmployees(id)
+        dispatch(setEmployees(arrayRegistros))
+        // dispatch(setMostrar(arrayRegistros))
+    }
+}
+
+
+export const startDeletEmpleado = (id) => {
+    return async( dispatch) => {
+
+        const docRef = doc( FirebaseDB, `/usuarios/NVJKnqX8MI7dJryiq0hW/registros/6WKMIKhVB7hEn1LkOLT3/personal/${id}`);
+        await deleteDoc( docRef );
+        dispatch( deleteEmpleadoById(id) );
+
     }
 }

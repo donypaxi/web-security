@@ -30,7 +30,7 @@ export const FormularioPersonal = () => {
 
   return (
     <>
-        <form onSubmit={handleSend} className="px-10 flex flex-col">
+        <form onSubmit={handleSend} className="px-10 flex flex-col min-h-full">
             <Grid container spacing={2}  >
               <Grid item xs={12} md={6} >
                 <TextField
@@ -219,12 +219,12 @@ export const FormularioPersonal = () => {
               </Grid>
             </Grid>
 
-            <div className="flex justify-end gap-5">
+            <div className="flex justify-end gap-5 mt-10">
               <Button
                 variant="contained"
                 color="error"
                 onClick={onResetForm}
-                // sx={{my:2, alignSelf:'flex-end'}}
+                sx={{my:2, alignSelf:'flex-end'}}
               >
                 Cancelar
               </Button>
@@ -233,8 +233,8 @@ export const FormularioPersonal = () => {
                 variant="contained"
                 color="success"
                 disabled={!completeCampos}
-                // sx={{
-                //   my:2, alignSelf:'flex-end'}}
+                sx={{
+                  my:2, alignSelf:'flex-end'}}
               >
                 Guardar
               </Button>

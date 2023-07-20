@@ -10,7 +10,9 @@ export const contractorSlice = createSlice({
         mostrar:[],
         filter:[],
         activeEdit:false,
-        idRegister:''
+        idRegister:'',
+        empleados:'',
+        mostrarEmpleados:''
 
     },
     reducers: {
@@ -21,6 +23,10 @@ export const contractorSlice = createSlice({
         addNewContratista: (state, actions ) => {
             state.contratistas.push( actions.payload );
             // state.isSaving = false;
+        },
+        addNewEmployee:(state,actions) => {
+            state.mostrarEmpleados.push( actions.payload );
+
         },
         addNewRegister: (state, actions ) => {
             state.records.push( actions.payload );
@@ -46,6 +52,11 @@ export const contractorSlice = createSlice({
             state.records= actions.payload
             state.mostrar=state.records
         },
+        setEmployees:(state,actions)=>{
+            // state.mostrar = actions.payload
+            state.empleados= actions.payload
+            state.mostrarEmpleados=state.empleados
+        },
         updateContractor:(state,{payload}) =>{
             const index = state.contratistas.findIndex((contratista) => contratista.id === payload.id);
             if (index !== -1) {
@@ -69,10 +80,13 @@ export const contractorSlice = createSlice({
             state.records = state.records.filter( register => register.id !== payload );
 
         },
+        deleteEmpleadoById:(state,{payload}) => {
+            state.mostrarEmpleados = state.mostrarEmpleados.filter( empleado => empleado.id !== payload );
+        },
         idRegister:(state,actions)=>{
             state.idRegister=actions.payload
         }
         
     }
 });
-export const {setFilter,setMostrar,setContratista,addNewContratista,addNewRegister,setRecords,active,updateRegister,desactivarContractor,updateContractor,deleteContractorById,deleteRegisterById,idRegister } = contractorSlice.actions;
+export const {deleteEmpleadoById,addNewEmployee,setEmployees,setFilter,setMostrar,setContratista,addNewContratista,addNewRegister,setRecords,active,updateRegister,desactivarContractor,updateContractor,deleteContractorById,deleteRegisterById,idRegister } = contractorSlice.actions;
